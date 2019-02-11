@@ -1,0 +1,46 @@
+sudo: required
+
+language: node_js
+
+services:
+  - docker
+  - mysql
+
+env:
+  - DOCKER_COMPOSE_VERSION: 1.23.1
+  - COMMIT: ${TRAVIS_COMMIT::8}
+  - API: trifold-api
+  - API_REPO: https://github.com/jdecked/$API.git
+  - CLIENT: trifold-client
+  - CLIENT_REPO: https://github.com/jdecked/$CLIENT.git
+  - NGINX: trifold
+  - NGINX_REPO: https://github.com/jdecked/$NGINX.git#master:nginx
+  - DB: mysql
+  - DJANGO: 2.1
+
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install -o Dpkg::Options::="--force-confold" --force-yes -y docker-ce
+  - docker-compose --version
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+
+before_script:
+  - export DJANGO_SECRET_KEY=everything_is_foobar_and_nothing_matters
+  - sh -e /etc/init.d/xvfb start
+  - sleep 3
+  - bash ./docker_build.sh
+  - mysql -e 'create database trifold_test;' -u root
+
+script:
+  - docker-compose -f docker-compose-ci.yml run api-service python manage.py test
+  - docker-compose -f docker-compose-ci.yml run web-service yarn test
+  - docker-compose -f docker-compose-ci.yml run api-service reset_db.sh
+
+after_script:
+  - docker-compose down
+
+after_success:
+  - bash ./docker_push.sh
