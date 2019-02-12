@@ -3,19 +3,22 @@ version: '3.7'
 services:
   db:
     image: mysql
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
     ports:
       - "5432:5432"
-    healthcheck:
-      test: exit 0
 
   api-service:
     container_name: api-service
     build:
       context: https://github.com/jdecked/trifold-api.git
+      args:
+        - DJANGO_SECRET_KEY
     expose:
       - '5000'
     environment:
       - DJANGO_ENVIRONMENT=production
+      - DJANGO_SECRET_KEY
     depends_on:
       - db
     links:
@@ -44,6 +47,9 @@ services:
         - HTTPS=true
     ports:
       - '9000:9000'
+    environment:
+      - NODE_ENV=development
+      - HTTPS=true
     depends_on:
       - api-service
     links:
