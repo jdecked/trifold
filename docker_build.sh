@@ -2,7 +2,7 @@
 
 echo $TRAVIS_BRANCH
 
-docker login -u $DOCKER_ID --password-stdin $DOCKER_PASSWORD
+echo $DOCKER_PASSWORD | docker login -u $DOCKER_ID --password-stdin
 echo 'still going 1'
 docker pull $DOCKER_ID/$API
 echo 'still going 2'
