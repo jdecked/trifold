@@ -3,24 +3,25 @@ version: '3.7'
 services:
   db:
     image: mysql
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
     ports:
       - "5432:5432" # expose ports - HOST:CONTAINER
-    healthcheck:
-      test: exit 0
 
   api-service:
     container_name: api-service
     build:
       context: ../trifold-api
       dockerfile: Dockerfile-local
+      args:
+        - DJANGO_SECRET_KEY
     volumes:
       - '../trifold-api:/usr/src/app'
     ports:
       - 5001:5000 # expose ports - HOST:CONTAINER
     environment:
-      - DATABASE_URL=mysql://root@db:5432/trifold_dev
-      - DJANGO_SECRET_KEY=haha_fake_key
-      - DJANGO_ENVIRONMENT=development
+      - DJANGO_SECRET_KEY
+    env_file: ./.env
     depends_on:
       - db
     links:

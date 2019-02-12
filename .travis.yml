@@ -18,7 +18,6 @@ env:
     - NGINX_REPO=https://github.com/jdecked/$NGINX.git#master:nginx
     - DB=mysql
     - DJANGO=2.1
-    - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
     - DJANGO_ENVIRONMENT=production
 
 before_install:

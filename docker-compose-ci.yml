@@ -15,9 +15,6 @@ services:
     expose:
       - '5000'
     environment:
-      - DATABASE_URL=mysql://root@db:5432/trifold_staging
-      - DATABASE_TEST_URL=mysql://root@db:5432/trifold_test
-      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
       - DJANGO_ENVIRONMENT=production
     depends_on:
       - db

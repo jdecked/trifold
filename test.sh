@@ -11,6 +11,9 @@ inspect() {
 docker-compose run trifold-api python manage.py test
 inspect $? trifold-api
 
+yarn run test
+inspect $? trifold-client
+
 if [ -n "${fails}" ];
   then
     echo "Tests failed: ${fails}"
