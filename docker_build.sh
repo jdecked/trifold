@@ -1,7 +1,9 @@
 #!/bin/sh
 
+echo $TRAVIS_BRANCH
+
 if [ "$TRAVIS_BRANCH" == "development" ]; then
-  docker login -e $DOCKER_EMAIL -u $DOCKER_ID -p $DOCKER_PASSWORD
+  docker login -u $DOCKER_ID -p $DOCKER_PASSWORD
   docker pull $DOCKER_ID/$API
   docker pull $DOCKER_ID/$CLIENT
   docker pull $DOCKER_ID/$NGINX
