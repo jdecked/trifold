@@ -1,38 +1,35 @@
 version: '3.7'
 
 services:
-  mysql:
-    container_name: mysql
-    image: mysql
-    hostname: mysql
-    environment:
-      - MYSQL_ALLOW_EMPTY_PASSWORD=1
-    ports:
-      - 5433:5433
-    restart: always
+  db:
+    container_name: db
+    image: postgres
 
   api-service:
     container_name: api-service
     build:
       context: ../trifold-api
+      dockerfile: Dockerfile-local
       args:
         - DJANGO_SECRET_KEY
+        - CLIENT_ID
     volumes:
-      - '../trifold-api:/usr/src/app'
+      - ../trifold-api:/usr/src/app
     ports:
-      - '8000:8000'
+      - "8000:8000"
     environment:
       - DJANGO_SECRET_KEY
+      - CLIENT_ID
     env_file: ../trifold-api/.env
     depends_on:
-      - mysql
+      - db
 
   nginx:
     container_name: nginx
     build: ./nginx/
     restart: always
     ports:
-      - 80:80
+      - "80:80"
     depends_on:
       - api-service
       - web-service
@@ -45,13 +42,16 @@ services:
     build:
       context: ../trifold-client
       dockerfile: Dockerfile-local
+      args:
+        - REACT_APP_OAUTH_CLIENT_ID
     volumes:
-      - '../trifold-client:/usr/src/app'
-      - '/usr/src/app/node_modules'
+      - ../trifold-client:/usr/src/app
+      - /usr/src/app/node_modules
     ports:
-      - '9000:9000'
+      - "9000:9000"
     environment:
       - NODE_ENV=development
-      - HTTPS=true
+      - REACT_APP_OAUTH_CLIENT_ID
+    env_file: ../trifold-client/.env
     depends_on:
       - api-service
