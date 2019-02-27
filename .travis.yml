@@ -16,9 +16,8 @@ env:
     - CLIENT_REPO=https://github.com/jdecked/$CLIENT.git
     - NGINX=trifold
     - NGINX_REPO=https://github.com/jdecked/$NGINX.git#master:nginx
-    - DB=mysql
     - DJANGO=2.1
-    - DJANGO_ENVIRONMENT=production
+    - DJANGO_ENVIRONMENT=testing
 
 before_install:
   - sudo apt-get update
@@ -29,16 +28,11 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
 
-before_script:
-  - sh -e /etc/init.d/xvfb start
-  - sleep 3
-  - mysql -e 'create database trifold_test;' -u root
-
 script:
   - docker-compose -f docker-compose-ci.yml build api-service
   - docker-compose -f docker-compose-ci.yml build web-service
   - docker-compose -f docker-compose-ci.yml run api-service python manage.py test
-  - docker-compose -f docker-compose-ci.yml run web-service yarn test
+  - docker-compose -f docker-compose-ci.yml run web-service CI=true yarn test
   - docker-compose -f docker-compose-ci.yml run api-service reset_db.sh
 
 after_script:

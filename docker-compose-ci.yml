@@ -20,7 +20,6 @@ services:
       - CLIENT_ID
     depends_on:
       - db
-    command: gunicorn wsgi:application --log-file -
 
   nginx:
     container_name: nginx
