@@ -1,15 +1,9 @@
 version: '3.7'
 
 services:
-  mysql:
-    container_name: mysql
-    image: mysql
-    hostname: mysql
-    environment:
-      - MYSQL_ALLOW_EMPTY_PASSWORD=1
-    ports:
-      - 5433:5433
-    restart: always
+  db:
+    container_name: db
+    image: postgres
 
   api-service:
     container_name: api-service
@@ -17,14 +11,16 @@ services:
       context: https://github.com/jdecked/trifold-api.git
       args:
         - DJANGO_SECRET_KEY
+        - CLIENT_ID
     ports:
-      - 8000:8000
+      - "8000:8000"
     environment:
       - DJANGO_ENVIRONMENT=production
       - DJANGO_SECRET_KEY
+      - CLIENT_ID
     depends_on:
-      - mysql
-    command: gunicorn --certfile config/ssl/development/localhost-cert.pem --keyfile config/ssl/development/localhost-key.pem --ca-cert config/ssl/development/ca-cert.pem wsgi:application --log-file -
+      - db
+    command: gunicorn wsgi:application --log-file -
 
   nginx:
     container_name: nginx
@@ -44,12 +40,10 @@ services:
     build:
       context: https://github.com/jdecked/trifold-client.git
       args:
-        - NODE_ENV=development
-        - HTTPS=true
+        - REACT_APP_OAUTH_CLIENT_ID
     ports:
-      - 9000:9000
+      - "9000:9000"
     environment:
-      - NODE_ENV=development
-      - HTTPS=true
+      - REACT_APP_OAUTH_CLIENT_ID
     depends_on:
       - api-service
