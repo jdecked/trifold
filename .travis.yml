@@ -18,6 +18,7 @@ env:
     - NGINX_REPO=https://github.com/jdecked/$NGINX.git#master:nginx
     - DJANGO=2.1
     - DJANGO_ENVIRONMENT=testing
+    - CI=true
 
 before_install:
   - sudo apt-get update
@@ -31,9 +32,9 @@ before_install:
 script:
   - docker-compose -f docker-compose-ci.yml build api-service
   - docker-compose -f docker-compose-ci.yml build web-service
-  - docker-compose -f docker-compose-ci.yml run api-service python manage.py test
-  - docker-compose -f docker-compose-ci.yml run web-service CI=true yarn test
-  - docker-compose -f docker-compose-ci.yml run api-service reset_db.sh
+  - docker-compose -f docker-compose-ci.yml up
+  - docker-compose -f docker-compose-ci.yml run --service-ports api-service python manage.py test
+  - docker-compose -f docker-compose-ci.yml run --service-ports web-service yarn test
 
 after_script:
   - docker-compose down
