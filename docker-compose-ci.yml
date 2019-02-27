@@ -38,6 +38,7 @@ services:
     container_name: web-service
     build:
       context: https://github.com/jdecked/trifold-client.git
+      dockerfile: Dockerfile-test
       args:
         - REACT_APP_OAUTH_CLIENT_ID
     ports:

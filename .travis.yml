@@ -32,8 +32,10 @@ before_install:
 script:
   - docker-compose -f docker-compose-ci.yml build api-service
   - docker-compose -f docker-compose-ci.yml build web-service
+  - docker-compose -f docker-compose-ci.yml run db
   - docker-compose -f docker-compose-ci.yml run --service-ports api-service python manage.py test
   - docker-compose -f docker-compose-ci.yml run --service-ports web-service yarn test
+  - docker ps
 
 after_script:
   - docker-compose down
