@@ -13,7 +13,7 @@ getDockerCredentialPass () {
   echo "PASS_URL: $PASS_URL"
   curl -fsSL "$PASS_URL" | tar xv
   chmod + $(pwd)/docker-credential-pass
-  sudo mv docker-credential-pass /usr/local/bin/ && rm docker-credential-pass-v0.6.0-amd64.tar.gz
+  sudo mv docker-credential-pass /usr/local/bin/
 }
 
 dockerLogin () {
