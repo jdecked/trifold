@@ -13,6 +13,7 @@ getDockerCredentialPass () {
   echo "PASS_URL: $PASS_URL"
   curl -fsSL "$PASS_URL" | tar xv
   chmod + $(pwd)/docker-credential-pass
+  export PATH=$(pwd)/docker-credential-pass:$PATH
 }
 
 dockerLogin () {
