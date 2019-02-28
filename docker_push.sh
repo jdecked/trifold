@@ -13,7 +13,6 @@ getDockerCredentialPass () {
   echo "PASS_URL: $PASS_URL"
   curl -fsSL "$PASS_URL" | tar xv
   chmod + $(pwd)/docker-credential-pass
-  export PATH=$(pwd)/docker-credential-pass:$PATH
 }
 
 dockerLogin () {
@@ -35,6 +34,7 @@ EOF
 
 if [ -z "$TRAVIS_PULL_REQUEST" ] || [ "$TRAVIS_PULL_REQUEST" == "false" ]
 then
+  sudo apt-get install pass
   getDockerCredentialPass
   dockerLogin
 
