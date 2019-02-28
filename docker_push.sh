@@ -14,10 +14,11 @@ getDockerCredentialPass () {
   curl -fsSL "$PASS_URL" | tar xv
   chmod + $(pwd)/docker-credential-pass
   export PATH=$(pwd)/docker-credential-pass:$PATH
+  echo $PATH
 }
 
 dockerLogin () {
-  [ "$CI" = "true" ] && gpg --batch --gen-key <<-EOF ; pass init $(gpg --no-auto-check-trustdb --list-secret-keys | grep ^sec | cut -d/ -f2 | cut -d" " -f1)
+  [ "$CI" = "true" ] && gpg2 --batch --gen-key <<-EOF ; pass init $(gpg2 --no-auto-check-trustdb --list-secret-keys | grep ^sec | cut -d/ -f2 | cut -d" " -f1)
 %echo Generating a standard key
 Key-Type: DSA
 Key-Length: 1024
@@ -36,6 +37,7 @@ EOF
 if [ -z "$TRAVIS_PULL_REQUEST" ] || [ "$TRAVIS_PULL_REQUEST" == "false" ]
 then
   sudo apt-get install pass
+  sudo apt-get install gnupg2 -y
   mkdir $HOME/.docker
   touch $HOME/.docker/config.json
   echo \{\"credsStore\": \"pass\"\} > $HOME/.docker/config.json
