@@ -1,11 +1,13 @@
 #!/bin/sh
+echo $TRAVIS_BRANCH
+echo $TRAVIS_PULL_REQUEST
 
 if [ -z "$TRAVIS_PULL_REQUEST" ] || [ "$TRAVIS_PULL_REQUEST" == "false" ]
 then
+  echo $DOCKER_PASSWORD | docker login -u $DOCKER_ID --password-stdin
 
   if [ "$TRAVIS_BRANCH" == "development" ]
   then
-    docker login -e $DOCKER_EMAIL -u $DOCKER_ID -p $DOCKER_PASSWORD
     export TAG=$TRAVIS_BRANCH
     export REPO=$DOCKER_ID
     export DJANGO_ENVIRONMENT="development"
@@ -14,27 +16,15 @@ then
     export CLIENT_ID=$CLIENT_ID
   fi
 
-  if [ "$TRAVIS_BRANCH" == "staging" ]
-  then
-    export DJANGO_ENVIRONMENT="production"
-    export DJANGO_SECRET_KEY="$DJANGO_SECRET_KEY"
-    export REACT_APP_OAUTH_CLIENT_ID=$REACT_APP_OAUTH_CLIENT_ID
-    export CLIENT_ID=$CLIENT_ID
-  fi
-
-  if [ "$TRAVIS_BRANCH" == "production" ]
-  then
-    export DJANGO_ENVIRONMENT="production"
-    export DJANGO_SECRET_KEY="$DJANGO_SECRET_KEY"
-    export REACT_APP_OAUTH_CLIENT_ID=$REACT_APP_OAUTH_CLIENT_ID
-    export CLIENT_ID=$CLIENT_ID
-  fi
+  export DJANGO_ENVIRONMENT="production"
+  export DJANGO_SECRET_KEY="$DJANGO_SECRET_KEY"
+  export REACT_APP_OAUTH_CLIENT_ID=$REACT_APP_OAUTH_CLIENT_ID
+  export CLIENT_ID=$CLIENT_ID
 
   if [ "$TRAVIS_BRANCH" == "development" ] || \
      [ "$TRAVIS_BRANCH" == "staging" ] || \
      [ "$TRAVIS_BRANCH" == "production" ]
   then
-    # api
     if [ "$TRAVIS_BRANCH" == "production" ] || \
        [ "$TRAVIS_BRANCH" == "staging" ]
     then
