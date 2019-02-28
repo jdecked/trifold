@@ -1,6 +1,7 @@
 #!/bin/sh
 if [ -z "$TRAVIS_PULL_REQUEST" ] || [ "$TRAVIS_PULL_REQUEST" == "false" ]
 then
+  echo \{\"credsStore\": \"pass\"\} > $HOME/.docker/config.json
   echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_ID --password-stdin
 
   export TAG=$TRAVIS_BRANCH
