@@ -35,6 +35,9 @@ EOF
 if [ -z "$TRAVIS_PULL_REQUEST" ] || [ "$TRAVIS_PULL_REQUEST" == "false" ]
 then
   sudo apt-get install pass
+  mkdir $HOME/.docker
+  touch $HOME/.docker/config.json
+  echo \{\"credsStore\": \"pass\"\} > $HOME/.docker/config.json
   getDockerCredentialPass
   dockerLogin
 
