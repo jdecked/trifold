@@ -13,6 +13,7 @@ getDockerCredentialPass () {
   echo "PASS_URL: $PASS_URL"
   curl -fsSL "$PASS_URL" | tar xv
   chmod + $(pwd)/docker-credential-pass
+  export PATH=$(pwd)/docker-credential-pass:$PATH
 }
 
 dockerLogin () {
@@ -22,8 +23,8 @@ Key-Type: DSA
 Key-Length: 1024
 Subkey-Type: ELG-E
 Subkey-Length: 1024
-Name-Real: Meshuggah Rocks
-Name-Email: meshuggah@example.com
+Name-Real: Justine De Caires
+Name-Email: justine@minerva.kgi.edu
 Expire-Date: 0
 # Do a commit here, so that we can later print "done" :-)
 %commit
