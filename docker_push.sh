@@ -33,6 +33,11 @@ EOF
   echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 }
 
+herokuLogin() {
+  wget -qO- https://toolbelt.heroku.com/install.sh | sh
+  echo "$HEROKU_PASSWORD" | docker login -u "$HEROKU_USERNAME" --password-stdin registry.heroku.com
+}
+
 if [ -z "$TRAVIS_PULL_REQUEST" ] || [ "$TRAVIS_PULL_REQUEST" == "false" ]
 then
   sudo apt-get install pass
@@ -51,15 +56,15 @@ then
   export CLIENT_ID=$CLIENT_ID
 
   docker build $API_REPO -t $API:$COMMIT
-  docker tag $API:$COMMIT $REPO/$API:$TAG
-  docker push $REPO/$API:$TAG
+  docker tag $API:$COMMIT registry.heroku.com/$REPO/$API:$TAG
+  docker push registry.heroku.com/$REPO/$API:$TAG
 
   docker build $CLIENT_REPO -t $CLIENT:$COMMIT
-  docker tag $CLIENT:$COMMIT $REPO/$CLIENT:$TAG
-  docker push $REPO/$CLIENT:$TAG
+  docker tag $CLIENT:$COMMIT registry.heroku.com/$REPO/$CLIENT:$TAG
+  docker push registry.heroku.com/$REPO/$CLIENT:$TAG
 
   docker build $NGINX_REPO -t $NGINX:$COMMIT
-  docker tag $NGINX:$COMMIT $REPO/$NGINX:$TAG
-  docker push $REPO/$NGINX:$TAG
+  docker tag $NGINX:$COMMIT registry.heroku.com/$REPO/$NGINX:$TAG
+  docker push registry.heroku.com/$REPO/$NGINX:$TAG
 
 fi
