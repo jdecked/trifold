@@ -37,7 +37,6 @@ after_success:
 deploy:
   provider: script
   script:
-    echo $DOCKER_PASSWORD;
     heroku container:release $CLIENT --app $REPO;
     heroku container:release $API --app $REPO;
     heroku container:release $NGINX --app $REPO
