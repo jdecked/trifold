@@ -35,6 +35,10 @@ after_script:
 after_success:
 - bash ./docker_push.sh
 deploy:
-  provider: heroku
-  api_key:
-    secure: Mtzio9P8VOZ4W/3Anh9TDzFESdy+iQGhYgM06Xqay78i/Y2/Vf+D94OworVLCfmqCbWR+YrgviewDuehxH7h88i98XSoxBSVHg1wzZ7kCGnzP0IUjDyfhb72iBaEdfFIJIlCeLbawmC8t5myyS9tI1FBh76u3kRSLxgDAg1PYcARosEyH7hp5ZlHOLqRcgufw7RJVEbjToVL4PM5oIefAYx58tQ9C8ITENBG4Cd+3mSGDblnOnUGOILmrJMN9RAXOFniMFzRiT0d10RXM9DMyt6w5Eo9eBwg119m3Sh6io3lRG3PKbDvWAGiUQPc4NduOASfZwe1fQyIK5RzLPcAU5DgiCvO5BQ1CYLyrFMUSyKt8nGjXpjJleNVw0nbA0O26mqAdzyboYD6Br1UgVHKgo8aiiCDnXrnzWPNa+1WkVGCuStUNQU3EOgiymaWDTCRGZ+CzgVZtnwkiFaz2LL0UYQ1hfydEa3GpbDg+fqDyjSTOG2BhpAD+Bizc2iZkLaahF8iIGDYMBZTTBJMD7d6nlmciTbxtPagcJKCcVwfgJ/7e/1V6voMbFiOLV9MrFH8+wjw2i0Q30Z+EaFRH7mHClgPMsAlFQbAb3uSTUgD4jAT4IkotecbMrnSGwj5azupWwBMU4WD6rqQAMTOJ1oZY+IDmJ0B9/HWy8O/w4EkON8=
+  provider: script
+  script:
+    heroku container:release $CLIENT --app $REPO;
+    heroku container:release $API --app $REPO;
+    heroku container:release $NGINX --app $REPO
+  on:
+    branch: master
