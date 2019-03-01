@@ -35,7 +35,7 @@ EOF
 
 herokuLogin() {
   wget -qO- https://toolbelt.heroku.com/install.sh | sh
-  echo "$HEROKU_API_KEY" | docker login --username=_ --password-stdin registry.heroku.com
+  echo $HEROKU_API_KEY | docker login --username=_ --password-stdin registry.heroku.com
 }
 
 if [ -z "$TRAVIS_PULL_REQUEST" ] || [ "$TRAVIS_PULL_REQUEST" == "false" ]
