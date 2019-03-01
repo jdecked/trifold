@@ -35,7 +35,7 @@ EOF
 
 herokuLogin() {
   wget -qO- https://toolbelt.heroku.com/install.sh | sh
-  echo "$HEROKU_PASSWORD" | docker login -u "$HEROKU_USERNAME" --password-stdin registry.heroku.com
+  echo "$HEROKU_PASSWORD" | docker login -u "$HEROKU_EMAIL" --password-stdin registry.heroku.com
 }
 
 if [ -z "$TRAVIS_PULL_REQUEST" ] || [ "$TRAVIS_PULL_REQUEST" == "false" ]
@@ -47,6 +47,7 @@ then
   echo \{\"credsStore\": \"pass\"\} > $HOME/.docker/config.json
   getDockerCredentialPass
   dockerLogin
+  herokuLogin
 
   export TAG=$TRAVIS_BRANCH
   export REPO=$DOCKER_ID
