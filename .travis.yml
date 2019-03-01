@@ -15,7 +15,6 @@ env:
   - DJANGO=2.1
   - DJANGO_ENVIRONMENT=testing
   - REPO=trifold
-  - secure: iWUDAAg8zflgp3BTCxiQYF8xF7RLtQN2DcHZqm7PhnVwnzNKIoqP5UAXDwtDaIrIrjWroay9GLOUorBxhnmaoWbM64JtUUyWXUCabBZFF38Y8bar3rtMAyPJ1bZyOw4NAGM2V96pK5L9aRKpaBJk0dv10shizLuqzOT7LdAaXa6PhKH7Q6zczzdc8tyRXChjk1qFXYj2/ZrNxCpZ7Y0QhllUrLvHZ4i4VOGqBuxKKJahwsg9qccxu+y1KEyi/27UX4gsDa+A7kL9uVHZIHxH7T0DosZe0pobNVYcUsI4g0O+Ky00JufGyo/gXVjEQTGdn//do7qljY+hQcmjFtYdDGvTj9HQ2A9k8nYilRWVDPv88Jp6G9W4loFQNgb4zMBC9WKcrixC+mzwdq3CzX5CpQ2ZyC8vTE7vjUuXUyJvhSi79kiRYiRAf1aaSnQQj9kXtpMWT2IcIkKbjn8UIZ1qAni7/NBOf+onATb5/JIKoU5XvIXrenR/F1FgPSIarCM8HQd1lFjUbjYkp1+nnfDv2z5yW1+UquIDWagzSRpokupOHsozGgzMNvsh2/WUaCtJmkNs56Ylzl55ijPWfkKx18IQOv0GVo2DOwnZfzvKquycGcdcw04mConF99/EUrNXPcQqylkcKAD1E8FeBJmqyQpvaGCsiKUJ7dvdfHWGpBo=
 before_install:
 - sudo apt-get update
 - sudo apt-get install -o Dpkg::Options::="--force-confold" --force-yes -y docker-ce
