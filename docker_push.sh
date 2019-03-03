@@ -49,7 +49,7 @@ then
   dockerLogin
   herokuLogin
 
-  export REPO=$DOCKER_ID
+  export REPO="trifold"
   export DJANGO_ENVIRONMENT="production"
   export DJANGO_SECRET_KEY="$DJANGO_SECRET_KEY"
   export REACT_APP_OAUTH_CLIENT_ID=$REACT_APP_OAUTH_CLIENT_ID
