@@ -35,7 +35,7 @@ after_success:
 deploy:
   provider: script
   script:
-    heroku container:release $CLIENT --app $REPO;
-    heroku container:release $API --app $REPO
+    heroku container:release $API --app $REPO;
+    heroku container:release $CLIENT --app $REPO
   on:
     branch: master
