@@ -56,11 +56,11 @@ then
   export CLIENT_ID=$CLIENT_ID
 
   docker build $API_REPO -t $API:$COMMIT
-  docker tag $API:$COMMIT registry.heroku.com/$REPO/$API
-  docker push registry.heroku.com/$REPO/$API
+  docker tag $API:$COMMIT registry.heroku.com/$REPO/api-service
+  docker push registry.heroku.com/$REPO/api-service
 
   docker build $CLIENT_REPO -t $CLIENT:$COMMIT
-  docker tag $CLIENT:$COMMIT registry.heroku.com/$REPO/$CLIENT
-  docker push registry.heroku.com/$REPO/$CLIENT
+  docker tag $CLIENT:$COMMIT registry.heroku.com/$REPO/web-service
+  docker push registry.heroku.com/$REPO/web-service
 
 fi
