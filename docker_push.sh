@@ -63,8 +63,4 @@ then
   docker tag $CLIENT:$COMMIT registry.heroku.com/$REPO/$CLIENT
   docker push registry.heroku.com/$REPO/$CLIENT
 
-  docker build $NGINX_REPO -t $NGINX:$COMMIT
-  docker tag $NGINX:$COMMIT registry.heroku.com/$REPO/$NGINX
-  docker push registry.heroku.com/$REPO/$NGINX
-
 fi

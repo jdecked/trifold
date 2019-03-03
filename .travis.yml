@@ -10,8 +10,6 @@ env:
   - API_REPO=https://github.com/jdecked/$API.git
   - CLIENT=trifold-client
   - CLIENT_REPO=https://github.com/jdecked/$CLIENT.git
-  - NGINX=trifold
-  - NGINX_REPO=https://github.com/jdecked/$NGINX.git#master:nginx
   - DJANGO=2.1
   - DJANGO_ENVIRONMENT=testing
   - REPO=trifold
@@ -38,7 +36,6 @@ deploy:
   provider: script
   script:
     heroku container:release $CLIENT --app $REPO;
-    heroku container:release $API --app $REPO;
-    heroku container:release $NGINX --app $REPO
+    heroku container:release $API --app $REPO
   on:
     branch: master
