@@ -49,7 +49,6 @@ then
   dockerLogin
   herokuLogin
 
-  export TAG=$TRAVIS_BRANCH
   export REPO=$DOCKER_ID
   export DJANGO_ENVIRONMENT="production"
   export DJANGO_SECRET_KEY="$DJANGO_SECRET_KEY"
@@ -57,15 +56,15 @@ then
   export CLIENT_ID=$CLIENT_ID
 
   docker build $API_REPO -t $API:$COMMIT
-  docker tag $API:$COMMIT registry.heroku.com/$REPO/$API:$TAG
-  docker push registry.heroku.com/$REPO/$API:$TAG
+  docker tag $API:$COMMIT registry.heroku.com/$REPO/$API
+  docker push registry.heroku.com/$REPO/$API
 
   docker build $CLIENT_REPO -t $CLIENT:$COMMIT
-  docker tag $CLIENT:$COMMIT registry.heroku.com/$REPO/$CLIENT:$TAG
-  docker push registry.heroku.com/$REPO/$CLIENT:$TAG
+  docker tag $CLIENT:$COMMIT registry.heroku.com/$REPO/$CLIENT
+  docker push registry.heroku.com/$REPO/$CLIENT
 
   docker build $NGINX_REPO -t $NGINX:$COMMIT
-  docker tag $NGINX:$COMMIT registry.heroku.com/$REPO/$NGINX:$TAG
-  docker push registry.heroku.com/$REPO/$NGINX:$TAG
+  docker tag $NGINX:$COMMIT registry.heroku.com/$REPO/$NGINX
+  docker push registry.heroku.com/$REPO/$NGINX
 
 fi
