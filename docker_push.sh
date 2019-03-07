@@ -55,11 +55,11 @@ then
   export REACT_APP_OAUTH_CLIENT_ID=$REACT_APP_OAUTH_CLIENT_ID
   export CLIENT_ID=$CLIENT_ID
 
-  docker build $API_REPO -t $API:$COMMIT
+  docker build $API_REPO -t $API:$COMMIT --build-arg CLIENT_ID=${CLIENT_ID} --build-arg DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
   docker tag $API:$COMMIT registry.heroku.com/$REPO/api
   docker push registry.heroku.com/$REPO/api
 
-  docker build $CLIENT_REPO -t $CLIENT:$COMMIT
+  docker build $CLIENT_REPO -t $CLIENT:$COMMIT --build-arg REACT_APP_OAUTH_CLIENT_ID=${REACT_APP_OAUTH_CLIENT_ID}
   docker tag $CLIENT:$COMMIT registry.heroku.com/$REPO/web
   docker push registry.heroku.com/$REPO/web
 
