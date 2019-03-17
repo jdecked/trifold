@@ -23,23 +23,14 @@
 ![Trifold Material Design Demo](./public/trifold_mdc.gif)
 
 ## Running Instructions
-Assuming you already have both git and yarn installed:
+Assuming you already have both git and Docker installed:
 ```
 $ git clone https://github.com/jdecked/trifold
+$ git clone https://github.com/jdecked/trifold-client
+$ git clone https://github.com/jdecked/trifold-api
 $ cd trifold
-$ yarn install
+$ docker-compose build
+$ docker-compose up
 ```
 
-Then, run `HTTPS=true yarn start` to run the client, and `cd server && DATABASE_URL=mysql://root@localhost/trifold gunicorn --certfile=config/ssl/development/localhost-cert.pem --keyfile=config/ssl/development/localhost-key.pem --ca-cert=config/ssl/development/ca-cert.pem wsgi --log-file -` to run the server.
-
-Navigate to `http://localhost:8000` in your browser to see Trifold up and running.
-
-### Creating a production build
-
-To bundle the frontend code for deployment (e.g. on a Heroku server) and run the Django code, use the following commands:
-```bash
-$ yarn build
-$ cd server
-$ ./manage.py collectstatic
-$ ENVIRONMENT=production DATABASE_URL=mysql://root@localhost/autograder gunicorn --certfile=config/ssl/development/localhost-cert.pem --keyfile=config/ssl/development/localhost-key.pem --ca-cert=config/ssl/development/ca-cert.pem wsgi --log-file -
-```
+Navigate to `http://localhost/` in your browser to see Trifold up and running. Note that this won't work without you first setting the appropriate DJANGO_SECRET_KEY, REACT_APP_OAUTH_CLIENT_ID, and CLIENT_ID environment variables. If you don't have them, [email me](mailto:justine@minerva.kgi.edu) to get them.
