@@ -17,10 +17,10 @@
 
 ## A Detour For Design
 ### Color Palette
-![Trifold Color Palette](./public/trifold_palette.gif)
+![Trifold Color Palette](./trifold_palette.gif)
 
 ### Color Palette Example with Material Design
-![Trifold Material Design Demo](./public/trifold_mdc.gif)
+![Trifold Material Design Demo](./trifold_mdc.gif)
 
 ## Running Instructions
 Assuming you already have both git and Docker installed:
