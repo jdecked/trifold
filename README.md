@@ -23,7 +23,9 @@
 ![Trifold Material Design Demo](./trifold_mdc.gif)
 
 ## Running Instructions
-Assuming you already have both git and Docker installed:
+Note that this repository is one of three repositories for the microservices involved in Trifold; the other two repositories host the [frontend code](https://github.com/jdecked/trifold-client) and the [backend code](https://github.com/jdecked/trifold-api), so go there if you're looking to peruse the JavaScript/Python source code.
+
+That said, assuming you already have both git and Docker installed:
 ```
 $ git clone https://github.com/jdecked/trifold
 $ git clone https://github.com/jdecked/trifold-client
